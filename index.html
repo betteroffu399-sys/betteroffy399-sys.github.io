@@ -1,180 +1,604 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Better Offu | Virtual Assistant Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Better Offu — Virtual Assistant &amp; Operations Support</title>
+<meta name="description" content="Better Offu — Virtual Assistant specializing in executive support, operations, and data-informed reporting.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#182430;
+    --ink-soft:#28394A;
+    --paper:#EFF2EE;
+    --paper-raised:#FFFFFF;
+    --teal:#1F5F52;
+    --teal-soft:#DCE9E4;
+    --amber:#D9A441;
+    --slate:#5B6670;
+    --line: rgba(24,36,48,0.12);
+    --radius: 3px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 32px;}
+  section{padding:88px 0;}
+  @media(max-width:640px){ section{padding:56px 0;} .wrap{padding:0 20px;} }
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
-        }
+  /* ---- status ticker ---- */
+  .ticker{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.02em;
+    padding:9px 0;
+    overflow:hidden;
+    white-space:nowrap;
+    position:relative;
+  }
+  .ticker__track{
+    display:inline-block;
+    padding-left:100%;
+    animation: ticker 26s linear infinite;
+  }
+  .ticker__track span{margin-right:48px; color:#B9C6BF;}
+  .ticker__track span strong{color:var(--amber); font-weight:500;}
+  @keyframes ticker{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-100%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker__track{ animation:none; padding-left:24px; }
+  }
 
-        body{
-            background:#f4f7fb;
-            color:#333;
-        }
+  /* ---- nav ---- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(239,242,238,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:60px;
+  }
+  .brand{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px;}
+  .brand span{color:var(--teal);}
+  .navlinks{display:flex; gap:28px; font-size:13.5px; font-family:'IBM Plex Mono',monospace;}
+  .navlinks a{text-decoration:none; color:var(--slate); transition:color .15s;}
+  .navlinks a:hover{color:var(--teal);}
+  .navlinks{display:none;}
+  @media(min-width:720px){ .navlinks{display:flex;} }
 
-        header{
-            background:#0A66C2;
-            color:white;
-            text-align:center;
-            padding:70px 20px;
-        }
+  /* ---- hero ---- */
+  .hero{padding-top:72px; padding-bottom:56px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--teal);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:18px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{
+    content:''; width:7px; height:7px; border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 3px var(--teal-soft);
+  }
+  .hero h1{
+    font-size:clamp(34px, 5.4vw, 56px);
+    line-height:1.06;
+    max-width:16ch;
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--teal);
+  }
+  .hero p.lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:56ch;
+    margin-bottom:34px;
+  }
+  .hero-cta{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:56px;}
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    padding:12px 20px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--ink);
+    transition: all .15s ease;
+  }
+  .btn--primary{background:var(--ink); color:var(--paper);}
+  .btn--primary:hover{background:var(--teal); border-color:var(--teal);}
+  .btn--ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+  .btn--ghost:hover{border-color:var(--ink);}
 
-        header h1{
-            font-size:48px;
-            margin-bottom:10px;
-        }
+  /* dashboard panel */
+  .panel{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow: 0 1px 2px rgba(24,36,48,0.04), 0 12px 32px -18px rgba(24,36,48,0.25);
+  }
+  .panel__bar{
+    display:flex; align-items:center; gap:6px;
+    padding:11px 16px;
+    border-bottom:1px solid var(--line);
+    background:#F7F8F6;
+  }
+  .panel__bar i{width:8px;height:8px;border-radius:50%; background:var(--line);}
+  .panel__bar span{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--slate);
+    margin-left:6px;
+  }
+  .stat-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+  }
+  @media(max-width:720px){ .stat-grid{grid-template-columns:repeat(2,1fr);} }
+  .stat{
+    padding:24px 20px;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .stat:nth-child(4n){border-right:none;}
+  .stat__num{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:28px;
+    color:var(--ink);
+  }
+  .stat__label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--slate);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    margin-top:6px;
+  }
 
-        header h2{
-            font-size:22px;
-            font-weight:normal;
-            margin-bottom:20px;
-        }
+  /* ---- section headers ---- */
+  .sec-head{margin-bottom:44px;}
+  .sec-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--teal);
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
+  .sec-head h2{font-size:clamp(24px,3.4vw,32px); margin-top:8px;}
 
-        .btn{
-            display:inline-block;
-            background:white;
-            color:#0A66C2;
-            text-decoration:none;
-            padding:12px 25px;
-            border-radius:30px;
-            margin:10px;
-            font-weight:bold;
-        }
+  /* ---- about ---- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap:56px;
+    align-items:start;
+  }
+  @media(max-width:800px){ .about-grid{grid-template-columns:1fr; gap:32px;} }
+  .about-grid p{color:var(--ink-soft); margin-bottom:16px; font-size:15.5px;}
+  .checklist{list-style:none;}
+  .checklist li{
+    display:flex; gap:10px;
+    padding:12px 0;
+    border-bottom:1px solid var(--line);
+    font-size:14.5px;
+  }
+  .checklist li:first-child{padding-top:0;}
+  .checklist .tick{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--teal);
+    flex-shrink:0;
+  }
 
-        section{
-            max-width:1000px;
-            margin:auto;
-            padding:60px 20px;
-        }
+  /* ---- experience ---- */
+  .job{
+    border-top:1px solid var(--line);
+    padding:32px 0;
+    display:grid;
+    grid-template-columns: 220px 1fr;
+    gap:32px;
+  }
+  .job:last-child{border-bottom:1px solid var(--line);}
+  @media(max-width:720px){ .job{grid-template-columns:1fr; gap:10px;} }
+  .job__meta .role{font-size:16px; font-weight:600; font-family:'Space Grotesk',sans-serif; margin-bottom:4px;}
+  .job__meta .co{color:var(--teal); font-size:13.5px; font-weight:500;}
+  .job__meta .dates{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; color:var(--slate); margin-top:8px;
+  }
+  .job ul{list-style:none;}
+  .job li{
+    position:relative;
+    padding-left:20px;
+    margin-bottom:10px;
+    font-size:14.5px;
+    color:var(--ink-soft);
+  }
+  .job li::before{
+    content:'✓';
+    position:absolute; left:0; top:1px;
+    color:var(--teal);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+  }
+  .placeholder{
+    background:var(--teal-soft);
+    color:var(--teal);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    padding:1px 6px;
+    border-radius:3px;
+  }
 
-        h3{
-            color:#0A66C2;
-            margin-bottom:20px;
-            font-size:30px;
-        }
+  /* ---- projects ---- */
+  .proj-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  @media(max-width:760px){ .proj-grid{grid-template-columns:1fr;} }
+  .proj-card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:28px;
+    display:flex;
+    flex-direction:column;
+    height:100%;
+  }
+  .proj-card .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--amber);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-bottom:12px;
+  }
+  .proj-card h3{font-size:19px; margin-bottom:10px;}
+  .proj-card p{font-size:14.5px; color:var(--ink-soft); margin-bottom:18px; flex-grow:1;}
+  .stack{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px;}
+  .stack span{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    padding:4px 9px;
+    border-radius:3px;
+    color:var(--ink-soft);
+  }
+  .proj-card .link{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--teal);
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .proj-card .link:hover{text-decoration:underline;}
 
-        .card{
-            background:white;
-            padding:25px;
-            border-radius:12px;
-            box-shadow:0 5px 15px rgba(0,0,0,.1);
-            margin-bottom:25px;
-        }
+  /* ---- toolkit ---- */
+  .toolkit{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  @media(max-width:720px){ .toolkit{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:460px){ .toolkit{grid-template-columns:1fr;} }
+  .tool-group{background:var(--paper-raised); padding:22px;}
+  .tool-group h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--teal);
+    margin-bottom:12px;
+  }
+  .tool-group p{font-size:14px; color:var(--ink-soft); line-height:1.7;}
 
-        ul{
-            padding-left:20px;
-        }
+  /* ---- social proof ---- */
+  .social-strip{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  @media(max-width:720px){ .social-strip{grid-template-columns:1fr;} }
+  .social-card{
+    border:1px solid var(--line);
+    background:var(--paper-raised);
+    border-radius:6px;
+    padding:26px;
+  }
+  .social-card .plat{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--slate);
+    margin-bottom:10px;
+  }
+  .social-card p{font-size:14.5px; color:var(--ink-soft);}
 
-        li{
-            margin-bottom:10px;
-        }
+  /* ---- footer / contact ---- */
+  footer{
+    background:var(--ink);
+    color:var(--paper);
+    padding:72px 0 40px;
+  }
+  footer h2{color:var(--paper); font-size:clamp(26px,4vw,38px); max-width:14ch; margin-bottom:18px;}
+  footer p{color:#B9C6BF; max-width:48ch; margin-bottom:32px; font-size:15px;}
+  .contact-row{
+    display:flex; flex-wrap:wrap; gap:14px; margin-bottom:56px;
+  }
+  footer .btn--primary{background:var(--amber); color:var(--ink); border-color:var(--amber);}
+  footer .btn--primary:hover{background:#EAB65C;}
+  footer .btn--ghost{color:var(--paper); border-color:rgba(239,242,238,0.25);}
+  footer .btn--ghost:hover{border-color:var(--paper);}
+  .foot-bottom{
+    border-top:1px solid rgba(239,242,238,0.14);
+    padding-top:24px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:#7C8A82;
+  }
 
-        footer{
-            background:#0A66C2;
-            color:white;
-            text-align:center;
-            padding:20px;
-        }
-    </style>
+  /* fade-in on scroll */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.show{opacity:1; transform:translateY(0);}
+
+  :focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+</style>
 </head>
-
 <body>
 
-<header>
+<div class="ticker" role="note" aria-label="Availability status">
+  <div class="ticker__track">
+    <span><strong>●</strong> AVAILABLE FOR REMOTE WORK</span>
+    <span>BASED IN ENUGU, NIGERIA (WAT)</span>
+    <span>OPEN TO 20+ HRS/WEEK</span>
+    <span>ADMIN · SOCIAL MEDIA · DATA REPORTING</span>
+    <span><strong>●</strong> AVAILABLE FOR REMOTE WORK</span>
+    <span>BASED IN ENUGU, NIGERIA (WAT)</span>
+    <span>OPEN TO 20+ HRS/WEEK</span>
+    <span>ADMIN · SOCIAL MEDIA · DATA REPORTING</span>
+  </div>
+</div>
 
-<h1>Better Offu</h1>
+<nav>
+  <div class="wrap">
+    <div class="brand">BETTER <span>OFFU</span></div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
 
-<h2>Administrative & Research Virtual Assistant</h2>
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Virtual Assistant &amp; Operations Support</div>
+    <h1>I keep fast-moving teams <em>organized, responsive, and on schedule.</em></h1>
+    <p class="lede">Administrative and research support for executives, with hands-on experience in inbox management, data entry, customer-facing communication, and audience engagement across LinkedIn and Twitter/X — backed by a working knowledge of SQL and data analysis.</p>
+    <div class="hero-cta">
+      <a class="btn btn--primary" href="#contact">Get in touch →</a>
+      <a class="btn btn--ghost" href="#projects">View project work</a>
+    </div>
 
-<p>
-Helping founders and businesses stay organized through executive support,
-research, data management and workflow optimization.
-</p>
-
-<br>
-
-<a class="btn" href="#">Download Resume</a>
-
-<a class="btn" href="#">Contact Me</a>
-
+    <div class="panel reveal" id="dash">
+      <div class="panel__bar">
+        <i></i><i></i><i></i>
+        <span>ops-overview.dashboard</span>
+      </div>
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="stat__num">2+ yrs</div>
+          <div class="stat__label">Executive &amp; Admin Support</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">2</div>
+          <div class="stat__label">Remote VA Clients Served</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">4</div>
+          <div class="stat__label">ALX Certifications Earned</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">2</div>
+          <div class="stat__label">Data Projects Shipped</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
 
-<section>
-
-<h3>About Me</h3>
-
-<div class="card">
-
-<p>
-
-I'm an Administrative & Research Virtual Assistant with over 2 years of experience supporting executives, managing schedules, organizing data, preparing reports, and improving business operations.
-
-I'm ALX Certified and skilled in Google Workspace, Microsoft Excel, SQL, Power BI, Canva, and AI productivity tools. I enjoy helping businesses become more organized, efficient, and data-driven.
-
-</p>
-
-</div>
-
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="reveal">
+      <div class="sec-num">01 / About</div>
+      <h2 style="margin-bottom:18px;">Support that runs quietly in the background — until you need the numbers.</h2>
+      <p>I started in customer- and sales-facing admin roles, supporting a Regional Sales Manager and a fuel-station dealer with scheduling, correspondence, and record-keeping. Along the way, I kept noticing the same thing: the reports I was preparing mattered more than the tasks I was completing.</p>
+      <p>That pushed me into structured data training through ALX Africa — data analytics, and now data science — so I could bring real analysis, not just admin, to the teams I support. I'm also building a public presence on LinkedIn and Twitter/X, so I understand the community-engagement side of a role like this from both sides of the screen.</p>
+    </div>
+    <div class="reveal">
+      <ul class="checklist">
+        <li><span class="tick">✓</span> Executive scheduling &amp; inbox management</li>
+        <li><span class="tick">✓</span> Data entry &amp; organized digital recordkeeping</li>
+        <li><span class="tick">✓</span> Customer inquiry handling — email &amp; chat</li>
+        <li><span class="tick">✓</span> Social content coordination — LinkedIn &amp; X</li>
+        <li><span class="tick">✓</span> Research, reporting &amp; ad-hoc analysis</li>
+        <li><span class="tick">✓</span> Comfortable working solo, across time zones</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
-<section>
+<section id="experience" style="background:var(--paper-raised); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">02 / Experience</div>
+      <h2>Where I've put this into practice</h2>
+    </div>
 
-<h3>My Services</h3>
+    <div class="job reveal">
+      <div class="job__meta">
+        <div class="role">Administrative Assistant</div>
+        <div class="co">Multipro Consumer Products Ltd</div>
+        <div class="dates">Jan 2025 – Dec 2025 · Remote</div>
+      </div>
+      <ul>
+        <li>Managed day-to-day administrative tasks and scheduling for a Regional Sales Manager across <span class="placeholder">add # territories</span>.</li>
+        <li>Maintained accurate digital records and performed regular data entry to support sales tracking and reporting.</li>
+        <li>Triaged a high-volume inbox, responding to internal and external inquiries with professionalism and <span class="placeholder">add response-time detail</span>.</li>
+        <li>Coordinated communication between field teams, distributors, and management to keep operations running smoothly.</li>
+        <li>Conducted research and prepared reports supporting strategic planning and ad-hoc projects.</li>
+      </ul>
+    </div>
 
-<div class="card">
-
-<ul>
-
-<li>Executive Assistance</li>
-
-<li>Calendar Management</li>
-
-<li>Email Management</li>
-
-<li>Data Entry</li>
-
-<li>Online Research</li>
-
-<li>Social Media Support</li>
-
-<li>Customer Support</li>
-
-<li>Dashboard Creation</li>
-
-</ul>
-
-</div>
-
+    <div class="job reveal">
+      <div class="job__meta">
+        <div class="role">Executive Assistant to Dealer</div>
+        <div class="co">NNPC Filling Station, Ogui Road</div>
+        <div class="dates">Mar 2023 – Nov 2024 · Remote</div>
+      </div>
+      <ul>
+        <li>Handled customer and dealer inquiries via email with empathy and professionalism, resolving issues promptly.</li>
+        <li>Maintained sales, inventory, and expense records with a strong focus on accuracy and organized digital filing.</li>
+        <li>Performed consistent data entry and recordkeeping, cutting document retrieval time by <span class="placeholder">add improvement</span>.</li>
+        <li>Prepared operational reports and summaries that directly informed day-to-day decisions.</li>
+        <li>Worked independently with minimal supervision in a fast-paced retail environment.</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
-<section>
-
-<h3>Skills</h3>
-
-<div class="card">
-
-<p>
-
-Google Workspace • Microsoft Excel • SQL • Power BI • Canva • GitHub • ChatGPT • Notion • ClickUp • Microsoft Office
-
-</p>
-
-</div>
-
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">03 / Projects</div>
+      <h2>Data work, from raw numbers to a decision</h2>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <div class="tag">Capstone Project</div>
+        <h3>Nova Gear Electronics — Sales Analysis</h3>
+        <p>End-to-end sales analysis for a fictional electronics retailer spanning 2021–2025 across 8 countries and 6 product categories. Built an interactive dashboard, then translated it into a stakeholder-ready presentation and findings report.</p>
+        <div class="stack">
+          <span>Google Sheets</span><span>Excel</span><span>SQL</span><span>PowerPoint</span>
+        </div>
+        <a class="link" href="#contact">Request full deck →</a>
+      </div>
+      <div class="proj-card reveal">
+        <div class="tag">Data Pipeline</div>
+        <h3>Maji Ndogo — Farm Survey Pipeline</h3>
+        <p>Built a data pipeline over a farm-survey dataset — cleaning, validating, and exploring the data before running hypothesis tests to answer real agricultural questions.</p>
+        <div class="stack">
+          <span>Python</span><span>DuckDB</span><span>SQLAlchemy</span><span>EDA</span>
+        </div>
+        <a class="link" href="#contact">Request notebook →</a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<footer>
+<section id="toolkit" style="background:var(--paper-raised); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">04 / Toolkit</div>
+      <h2>What I work in day to day</h2>
+    </div>
+    <div class="toolkit reveal">
+      <div class="tool-group">
+        <h4>Admin &amp; Ops</h4>
+        <p>Google Workspace, Calendly, Zoom, Slack, Microsoft Teams</p>
+      </div>
+      <div class="tool-group">
+        <h4>Data &amp; Records</h4>
+        <p>Excel, Google Sheets, SQL, Google Looker Studio, DuckDB</p>
+      </div>
+      <div class="tool-group">
+        <h4>Projects &amp; Content</h4>
+        <p>ClickUp, Notion, Trello, Asana, Canva, LinkedIn, Twitter/X</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-© 2026 Better Offu | Administrative & Research Virtual Assistant
+<section id="social">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">05 / Community &amp; Content</div>
+      <h2>Building an audience, not just admin skills</h2>
+    </div>
+    <div class="social-strip">
+      <div class="social-card reveal">
+        <div class="plat">LinkedIn</div>
+        <p>Publishing posts that connect virtual-assistant work with data analytics — writing to be understood by both hiring managers and a general professional audience.</p>
+      </div>
+      <div class="social-card reveal">
+        <div class="plat">Twitter / X</div>
+        <p>Growing a presence around career-building in tech-adjacent roles from Nigeria, engaging directly with replies and community discussion.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
+<footer id="contact">
+  <div class="wrap">
+    <div class="sec-num" style="color:var(--amber);">06 / Contact</div>
+    <h2>Let's talk about how I can support your team.</h2>
+    <p>Open to remote Virtual Assistant, administrative, and operations-support roles — 20+ hours/week, working across time zones from Enugu, Nigeria.</p>
+    <div class="contact-row">
+      <a class="btn btn--primary" href="mailto:betteroffu399@gmail.com">Email me →</a>
+      <a class="btn btn--ghost" href="tel:+2347065787522">+234 706 578 7522</a>
+      <a class="btn btn--ghost" href="#" target="_blank" rel="noopener">LinkedIn Profile</a>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Better Offu</span>
+      <span>Enugu, Nigeria — Remote-ready</span>
+    </div>
+  </div>
 </footer>
 
-</body>
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el=>io.observe(el));
+</script>
 
+</body>
 </html>
